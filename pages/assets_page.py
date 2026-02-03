@@ -10,8 +10,6 @@ class AssetsPage:
         expect(self.page.get_by_text("Assets", exact=True)).to_be_visible()
 
     def assert_network_filters_visible(self):
-        # Если фильтры лежат в listbox/menu — ограничиваем область
-        # Подстрой контейнер при необходимости:
         filters = self.page.locator("form")
 
         networks = ["SMARTCHAIN", "ULTIMA", "UCHAIN", "SMART", "TRON", "ETHEREUM", "BITCOIN"]
@@ -24,7 +22,3 @@ class AssetsPage:
         expect(switches.first).to_be_visible()
         assert switches.count() > 0
 
-    def select_network_from_dropdown(self, network_ui_name: str):
-        # по твоему скрину option/combobox — это прям то, что надо
-        self.page.get_by_role("combobox").click()
-        self.page.get_by_role("option", name=network_ui_name).click()
