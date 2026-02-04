@@ -1,8 +1,7 @@
 import re
 from playwright.sync_api import Page, expect
 
-
-class Notify_updata_config():
+class BasePage:
     def __init__(self, page: Page):
         self.page = page
 
@@ -14,3 +13,6 @@ class Notify_updata_config():
         publish_button = self.page.get_by_role("button", name="Publish")
         expect(publish_button).to_be_visible()
         expect(publish_button).to_be_enabled()
+
+    def navigate_to_application_info(self):
+        self.page.get_by_test_id("application-info-link").click()

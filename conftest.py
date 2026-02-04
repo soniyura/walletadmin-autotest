@@ -8,7 +8,7 @@ load_dotenv()
 
 @pytest.fixture(scope="session")
 def base_url():
-    url = os.getenv("BASE_URL", "https://walletadmin.plcu.team")
+    url = os.getenv("BASE_URL")
     if not url:
         pytest.fail("BASE_URL is not set")
     return url
