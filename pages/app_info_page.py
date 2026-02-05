@@ -1,10 +1,10 @@
 from playwright.sync_api import Page, expect
 
-class AndroidBlock:
+class OsBlock:
     def __init__(self, page: Page):
         self.page = page
 
-    def update_version_info(self, current_version_code: str, current_version_name: str,
+    def update_android_version_info(self, current_version_code: str, current_version_name: str,
                             min_version_code: str, min_version_name: str): # обновление информации о версии Android
         self.page.locator("form").filter(has_text="AndroidApplication").get_by_role("button").click() # открытие формы редактирования
 
@@ -23,11 +23,8 @@ class AndroidBlock:
         self.page.get_by_role("button", name="Confirm").click() # окончательное подтверждение изменений
 
 
-class IosBlock:
-    def __init__(self, page: Page):
-        self.page = page
 
-    def update_version_info(self, current_version_name: str, min_version_name: str): # обновление информации о версии iOS
+    def update_ios_version_info(self, current_version_name: str, min_version_name: str): # обновление информации о версии iOS
         self.page.locator("form").filter(has_text="IosApplication").get_by_role("button").click() # открытие формы редактирования
 
         self.page.get_by_role("textbox", name="Current Version Name").fill(current_version_name) # заполнение текущего имени версии

@@ -1,9 +1,9 @@
 import pytest
-from pages.assets_page import AssetsPage
+from pages.assets_page_section_view import AssetsSectionView
 
 def test_disable_all_filters_in_one_run(login):
     page = login
-    assets = AssetsPage(page)
+    assets = AssetsSectionView(page)
 
     networks = ["SMARTCHAIN", "ULTIMA", "UCHAIN", "SMART"]
 
