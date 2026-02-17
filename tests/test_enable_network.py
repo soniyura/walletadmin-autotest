@@ -1,4 +1,3 @@
-import pytest
 from pages.assets_page_section_view import AssetsSectionView
 
 def test_disable_all_filters_in_one_run(login):

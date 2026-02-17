@@ -24,3 +24,40 @@ class AssetsTableView:
 
         # главное: состояние выключено
         expect(checkbox).not_to_be_checked()
+
+
+
+
+
+
+
+
+
+    def assert_network_dropdown_default_all(self):
+        expect(
+            self.page.get_by_role("combobox")
+        ).to_have_text("ALL NETWORKS")
+
+
+    def open_networks_dropdown(self):
+        self.page.get_by_role("combobox").click()
+
+    def select_network(self, network_name: str):
+        self.open_networks_dropdown()
+        self.page.get_by_role("listbox") \
+            .get_by_role("option", name=network_name) \
+            .click()
+
+    def click_network_option(self, network_name: str):
+        self.page.get_by_role("listbox") \
+            .get_by_role("option", name=network_name) \
+            .click()
+
+
+    def assert_table_has_ticker(self, ticker: str):
+        # проверяем только колонку Ticker (3-я колонка)
+        cells = self.page.locator("tbody tr td:nth-child(3)", has_text=ticker)
+
+        # если есть хотя бы одна такая ячейка — ок
+        expect(cells.first).to_be_visible()
+        assert cells.count() > 0, f"Ticker '{ticker}' not found in Ticker column"

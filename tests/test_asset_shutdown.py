@@ -5,7 +5,7 @@ from pages.manage_asset import ManageAssetPage
 from pages.assets_page import AssetsPage
 from pages.assets_page_table_view import AssetsTableView
 
-def test_disable_and_open_ultima_urc20(login):
+def test_asset_shutdown(login):
     page = login
     assets = AssetsSectionView(page)
     base_page = BasePage(page)
