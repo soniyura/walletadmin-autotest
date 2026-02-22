@@ -85,7 +85,6 @@ class AssetsSectionView:
     Аsset shutdown
     https://testrail.dramaco.tech/index.php?/cases/view/209623
     """
-
     def _token_row_by_name(self, token_name: str):
         """
         Находим строку/карточку токена по имени (например 'ULTIMA URC-20')
@@ -129,5 +128,84 @@ class AssetsSectionView:
         token_link = row.get_by_text(token_name, exact=True).first
         expect(token_link).to_be_visible()
         token_link.click()
+
+
+    """
+    C209625
+    Verify ability to search by token name and token ticker
+    https://testrail.dramaco.tech/index.php?/cases/view/209625    
+    """
+    def insert_asset_name(self, text: str):
+        search_input = self.page.locator("input#search")
+        search_input.clear()
+        search_input.fill(text)
+
+    def expect_search_button_visible(self, button_name: str):
+        expect(
+            self.page.get_by_role("button", name=button_name)
+        ).to_be_visible()
+        expect(
+            self.page.get_by_role("button", name=button_name)
+        ).to_be_enabled()
+
+    def click_button(self, button_name: str):
+        button = self.page.get_by_role("button", name=button_name, exact=True)
+        expect(button).to_be_visible()
+        expect(button).to_be_enabled()
+        button.click()
+
+    """
+    Метод для проверки, что все отображаемые активы (в зависимости от фильтра) 
+    содержат заданное ключевое слово в имени или тикере.
+    то есть если 
+    field_type="name", то проверяем, что keyword(передаваемое слово например SPLIT ищется по имени) 
+    есть в имени каждого актива, если 
+    field_type="ticker", то проверяем, что keyword(передаваемое слово например USDT ищется по тикеру) 
+    есть в тикере каждого актива.
+    """
+    def assert_all_assets_contain_keyword(
+            self,
+            keyword: str,
+            field_type: str = "name"  # name | ticker
+    ):
+        self.page.wait_for_load_state("networkidle")
+
+        # выбираем нужный класс
+        typography_class = {
+            "name": "MuiTypography-body1",
+            "ticker": "MuiTypography-body2"
+        }.get(field_type)
+
+        assert typography_class, f"Unknown field_type: {field_type}"
+
+        elements = self.page.locator(
+            f"div.MuiBox-root:has(span.MuiSwitch-root) p.{typography_class}"
+        )
+
+        expect(elements.first).to_be_visible()
+
+        texts = [
+            t.strip()
+            for t in elements.all_text_contents()
+            if t and t.strip()
+        ]
+
+        assert texts, "No values found after search"
+
+        kw = keyword.lower()
+        bad = [t for t in texts if kw not in t.lower()]
+
+        assert not bad, (
+            f"Some values do not contain '{keyword}': {bad[:5]} "
+            f"(total bad: {len(bad)}, total values: {len(texts)})"
+        )
+    """C209625"""
+
+
+
+
+
+
+
 
 
