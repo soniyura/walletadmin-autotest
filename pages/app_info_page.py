@@ -4,6 +4,11 @@ class OsBlock:
     def __init__(self, page: Page):
         self.page = page
 
+    """
+    C209618
+    Verify ability to edit Android block
+    https://testrail.dramaco.tech/index.php?/cases/view/209618
+    """
     def update_android_version_info(self, current_version_code: str, current_version_name: str,
                             min_version_code: str, min_version_name: str): # обновление информации о версии Android
         self.page.locator("form").filter(has_text="AndroidApplication").get_by_role("button").click() # открытие формы редактирования
@@ -23,7 +28,11 @@ class OsBlock:
         self.page.get_by_role("button", name="Confirm").click() # окончательное подтверждение изменений
 
 
-
+    """
+    C209619
+    Verify ability to edit iOS block
+    https://testrail.dramaco.tech/index.php?/cases/view/209619
+    """
     def update_ios_version_info(self, current_version_name: str, min_version_name: str): # обновление информации о версии iOS
         self.page.locator("form").filter(has_text="IosApplication").get_by_role("button").click() # открытие формы редактирования
 

@@ -3,6 +3,11 @@ from pages.base_page import BasePage
 
 
 def test_update_android_version_info(login):
+    """
+    C209619
+    Verify ability to edit iOS block
+    https://testrail.dramaco.tech/index.php?/cases/view/209619
+    """
     page = login
     ios_block = OsBlock(page)
     base_page = BasePage(page)

@@ -1,4 +1,3 @@
-from pages.assets_page_table_view import AssetsTableView
 from pages.base_page import BasePage
 from pages.assets_page_section_view import AssetsSectionView
 from pages.manage_asset import ManageAssetPage
@@ -6,6 +5,11 @@ from pages.assets_page import AssetsPage
 from pages.assets_page_table_view import AssetsTableView
 
 def test_asset_shutdown(login):
+    """
+    C209623
+    Аsset shutdown
+    https://testrail.dramaco.tech/index.php?/cases/view/209623
+    """
     page = login
     assets = AssetsSectionView(page)
     base_page = BasePage(page)
