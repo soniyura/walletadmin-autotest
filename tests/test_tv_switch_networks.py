@@ -2,6 +2,11 @@ from pages.assets_page_table_view import AssetsTableView
 from pages.assets_page import AssetsPage
 
 def test_assets_page_table_view(login):
+    """
+    C209624
+    Verify ability to switch between networks
+    https://testrail.dramaco.tech/index.php?/cases/view/209624
+    """
     page = login
     assets_page = AssetsPage(page)
     table = AssetsTableView(page)
