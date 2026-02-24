@@ -70,3 +70,80 @@ class AssetsSortingMode:
         )
         self.page.mouse.up()
     """C209626"""
+
+
+
+
+    """C209627"""
+    def _get_row_by_ticker(self, ticker: str):
+        """Внутренний метод для поиска строки, чтобы не дублировать код"""
+        return self.page.locator("tr").filter(has_text=ticker).first
+
+    def assert_up_button_disabled(self, ticker: str):
+        """Проверяет, что кнопка ВВЕРХ (первая) заблокирована"""
+        row = self._get_row_by_ticker(ticker)
+
+        # Уточняем поиск: ищем тег button внутри ячейки (td),
+        # исключая th (ячейку-перетаскиватель)
+        up_button = row.locator("td button").first
+
+        expect(up_button).to_be_disabled()
+
+    def assert_down_button_enabled(self, ticker: str):
+        """Проверяет, что кнопка ВНИЗ (вторая) активна"""
+        row = self._get_row_by_ticker(ticker)
+
+        # Ищем последнюю кнопку среди всех кнопок в ячейках td
+        down_button = row.locator("td button").last
+
+        expect(down_button).to_be_enabled()
+
+    def click_down_button(self, ticker: str):
+        """Кликает на кнопку ВНИЗ (вторую)"""
+        row = self._get_row_by_ticker(ticker)
+        down_button = row.locator("td button").last
+
+        down_button.click()
+
+
+
+    def _get_row_by_ticker(self, ticker: str):
+        """Находит строку с тикером и скроллит к ней"""
+        row = self.page.locator("tr").filter(has_text=ticker).first
+        row.scroll_into_view_if_needed()  # Авто-скролл к элементу
+        return row
+
+    def assert_down_button_disabled(self, ticker: str):
+        """Проверяет, что кнопка ВНИЗ (последняя в строке) заблокирована"""
+        row = self._get_row_by_ticker(ticker)
+        # Ищем именно кнопку внутри ячеек td
+        down_button = row.locator("td button").last
+        expect(down_button).to_be_disabled()
+
+    def assert_up_button_enabled(self, ticker: str):
+        """Проверяет, что кнопка ВВЕРХ активна (используется после сдвига вниз)"""
+        row = self._get_row_by_ticker(ticker)
+        up_button = row.locator("td button").first
+        expect(up_button).to_be_enabled()
+
+    def click_up_button(self, ticker: str):
+        """Кликает на кнопку ВВЕРХ"""
+        row = self._get_row_by_ticker(ticker)
+        up_button = row.locator("td button").first
+        up_button.click()
+
+    def assert_row_is_at_top(self, ticker: str):
+        """Проверяет, что строка с тикером является первой в таблице (индекс 0)"""
+        first_row = self.page.locator("tbody tr").first
+        expect(first_row).to_contain_text(ticker)
+
+    """C209627"""
+
+
+
+
+
+
+
+
+
