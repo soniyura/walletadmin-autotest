@@ -22,4 +22,3 @@ def test_disable_all_filters_in_one_run(login):
     for n in networks:
         assets.enable_network_filter(n)
         assets.assert_network_card_visible(n)
-

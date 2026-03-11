@@ -21,4 +21,8 @@ class AssetsPage:
         self.page.get_by_role("button", name="Sorting Mode").click()
 
 
+    def open_add_new_asset(self):
+        self.page.get_by_role("button", name="Add Asset").click()
+
+
 
