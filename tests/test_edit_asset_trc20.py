@@ -5,7 +5,7 @@ from pages.manage_asset import ManageAssetPage
 from data.edit_asset_data import TRON
 
 
-@pytest.mark.parametrize("asset_data", TRON, ids=lambda x: x.asset_name)
+@pytest.mark.parametrize("asset_data", TRON, ids=lambda x: x.asset_name)  # type: ignore[arg-type]
 def test_edit_asset(login, asset_data):
     """
     C209631

@@ -1,5 +1,7 @@
 from data.models import EditAssetData
 from data.models import EditAssetDataBTC
+from data.models import EditAssetDataURC20
+from data.models import EditAssetDataSRC20
 
 
 
@@ -17,7 +19,7 @@ BINANCE_USD = EditAssetData(
     ai_whitepaper_url="https://ultima.io/documents/en/WhitePaperUT.pdfEDITED",
     network_fee="1",
 )
-BINANCE_USD = [BINANCE_USD]
+BINANCE_USD = [BINANCE_USD]  # type: ignore[assignment]
 
 TRON = EditAssetData(
     asset_name="Tether TRC20",
@@ -33,7 +35,7 @@ TRON = EditAssetData(
     ai_whitepaper_url="https://tron.org/whitepaper.pdf",
     network_fee="2",
 )
-TRON = [TRON]
+TRON = [TRON]  # type: ignore[assignment]
 
 ETH_USDC = EditAssetData(
     asset_name="USDC ERC20",
@@ -49,7 +51,7 @@ ETH_USDC = EditAssetData(
     ai_whitepaper_url="https://tron.org/whitepaper.pdf",
     network_fee="0.0002",
 )
-ETH_USDC = [ETH_USDC]
+ETH_USDC = [ETH_USDC]  # type: ignore[assignment]
 
 BTC = EditAssetDataBTC(
     asset_name="Bitcoin",
@@ -57,4 +59,41 @@ BTC = EditAssetDataBTC(
     nf_medium_priority=7,
     nf_low_priority=5,
 )
-BTC = [BTC]
+BTC = [BTC]  # type: ignore[assignment]
+
+
+URC20 = EditAssetDataURC20(
+    asset_name="VIP1 MINTER SPLIT",
+    token_name="WBTC EDITED",
+    ticker_name="WBTC",
+    ex_rate="USDT",
+    exrate_source_type="MARKET",
+    ai_website_url="https://tron.org",
+    ai_pool_address="UZaVpeM6fxcsnHoq8sThmL19JnGSiWKzEc",
+    ai_whitepaper_url="https://tron.org/whitepaper.pdf",
+    splitting_duration=700,
+    daily_reward=6,
+    start_block=1,
+    network_fee="2",
+)
+URC20 = [URC20]  # type: ignore[assignment]
+
+SRC20 = EditAssetDataSRC20(  # type: ignore[call-arg]
+    asset_name="VIP SPLIT",
+    token_name="VIP SPLIT EDITED",
+    ticker_name="SMS",
+    ex_rate="USDT",
+    exrate_source_type="MARKET",
+    ai_website_url="https://tron.org",
+    ai_pool_address="sN9ajQXiWio9mHuooHbTv5X2igcw7DbMs8",
+    ai_whitepaper_url="https://tron.org/whitepaper.pdf",
+    splitting_duration=700,
+    daily_reward=6,
+    start_block=1,
+    freezing_fee=5,
+    freezing_fee_address="sN9ajQXiWio9mHuooHbTv5X2igcw7DbMs8",
+    burning_fee=1,
+    burning_fee_address="sN9ajQXiWio9mHuooHbTv5X2igcw7DbMs8",
+    network_fee="2",
+)
+SRC20 = [SRC20]  # type: ignore[assignment]

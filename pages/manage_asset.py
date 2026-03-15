@@ -1,4 +1,3 @@
-import re
 from playwright.sync_api import Page, expect
 
 class ManageAssetPage:
@@ -46,6 +45,7 @@ class ManageAssetPage:
 
     ID_TOKEN_NAME = 'input[name="name"]'
     ID_TICKER_NAME = 'input[name="abbr"]'
+    ID_TICKER_NAME_URC20 = 'input[placeholder="Asset Ticker (eg BTC)"]'
     ID_DECIMALS = 'input[name="decimal_places"]'
     ID_CONTRACT_ADDRESS = 'input[name="contract_address"]'
     ID_URL = 'input[name="icon_url"]'
@@ -54,15 +54,39 @@ class ManageAssetPage:
     ID_AI_POOL_ADDRESS = 'input[name="pool_address"]'
     ID_AI_WHITEPAPER_URL = 'input[name="whitepaper_url"]'
     ID_NETWORK_FEE = 'input[name="base_coin_min_balance"]'
+    ID_NETWORK_FEE_NEW = 'input[name="max_network_fee"]'
     ID_DIALOG = '[role="dialog"]'
     ID_HIGH_PRIO_BTC = 'input[name="high_priority_btc_fee"]'
     ID_MEDIUM_PRIO_BTC = 'input[name="medium_priority_btc_fee"]'
     ID_LOW_PRIO_BTC = 'input[name="low_priority_btc_fee"]'
+    ID_SPLIT_DURATION = 'input[name="split_duration"]'
+    ID_DAILY_REWARD = 'input[name="daily_reward_amount"]'
+    ID_START_BLOCK = 'input[name="daily_reward_start_block"]'
+    ID_POOL_FEE_PERCENT = 'input[name="pool_fee_percent"]'
+    ID_POOL_FEE_ADDRESS = 'input[name="pool_fee_wallet_address"]'
+    ID_BURN_FEE_PERCENT = 'input[name="burn_fee_percent"]'
+    ID_BURN_FEE_ADDRESS = 'input[name="burn_fee_wallet_address"]'
 
 
     def edit_input_str(self, id: str, value: str):
         self.page.locator(id).fill(value)
 
+
+    def edit_pool_fee_percent(self, value: int):
+        self.edit_input_str(self.ID_POOL_FEE_PERCENT, str(value))
+        return self
+
+    def edit_pool_fee_address(self, value: str):
+        self.edit_input_str(self.ID_POOL_FEE_ADDRESS, value)
+        return self
+
+    def edit_burn_fee_percent(self, value: int):
+        self.edit_input_str(self.ID_BURN_FEE_PERCENT, str(value))
+        return self
+
+    def edit_burn_fee_address(self, value: str):
+        self.edit_input_str(self.ID_BURN_FEE_ADDRESS, value)
+        return self
 
     def edit_higt_prio_btc(self, value: int):
         self.edit_input_str(self.ID_HIGH_PRIO_BTC, str(value))
@@ -83,6 +107,31 @@ class ManageAssetPage:
 
     def edit_ticker_name(self, value: str):
         self.edit_input_str(self.ID_TICKER_NAME, value)
+        return self
+
+    def edit_ticker_name_urc20(self, value: str):
+        self.edit_input_str(self.ID_TICKER_NAME_URC20, value)
+        return self
+
+    def select_ticker_name(self, ticker: str):
+        input_locator = self.page.locator(self.ID_TICKER_NAME_URC20)
+        input_locator.click()
+        input_locator.fill(ticker)
+        dropdown_option = self.page.locator('[role="option"]').filter(has_text=ticker).first
+        expect(dropdown_option).to_be_visible()
+        dropdown_option.click()
+        return self
+
+    def edit_split_duration(self, value: str):
+        self.edit_input_str(self.ID_SPLIT_DURATION, str(value))
+        return self
+
+    def edit_daily_reward(self, value: str):
+        self.edit_input_str(self.ID_DAILY_REWARD, str(value))
+        return self
+
+    def edit_start_block(self, value: str):
+        self.edit_input_str(self.ID_START_BLOCK, str(value))
         return self
 
     def edit_input_int(self, value: int):
@@ -108,8 +157,27 @@ class ManageAssetPage:
         self.page.get_by_role("option", name=value).click()
         return self
 
+    def edit_exrate_source_type_market(self, value: str):
+        dropdown = self.page.get_by_role("combobox").nth(2)
+        dropdown.scroll_into_view_if_needed()
+        dropdown.click()
+        self.page.get_by_role("option", name=value).click()
+        return self
+
     def check_asset_information_switcher(self):
         toggle = self.page.locator('input[name="about"]')
+        if not toggle.is_checked():
+            toggle.click()
+        return self
+
+    def check_pool_fee_switcher(self):
+        toggle = self.page.locator('input[name="pool_fee"]')
+        if not toggle.is_checked():
+            toggle.click()
+        return self
+
+    def check_burn_fee_switcher(self):
+        toggle = self.page.locator('input[name="burning_fee"]')
         if not toggle.is_checked():
             toggle.click()
         return self
@@ -128,6 +196,10 @@ class ManageAssetPage:
 
     def edit_network_fee(self, value: str):
         self.edit_input_str(self.ID_NETWORK_FEE, str(value))
+        return self
+
+    def edit_network_fee_new(self, value: str):
+        self.edit_input_str(self.ID_NETWORK_FEE_NEW, str(value))
         return self
 
     def _network_filter(self, network: str): # вспомогательный метод для получения локатора фильтра по сети
