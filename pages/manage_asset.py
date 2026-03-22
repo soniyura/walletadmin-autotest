@@ -42,7 +42,6 @@ class ManageAssetPage:
 
 
 
-
     ID_TOKEN_NAME = 'input[name="name"]'
     ID_TICKER_NAME = 'input[name="abbr"]'
     ID_TICKER_NAME_URC20 = 'input[placeholder="Asset Ticker (eg BTC)"]'
@@ -66,10 +65,22 @@ class ManageAssetPage:
     ID_POOL_FEE_ADDRESS = 'input[name="pool_fee_wallet_address"]'
     ID_BURN_FEE_PERCENT = 'input[name="burn_fee_percent"]'
     ID_BURN_FEE_ADDRESS = 'input[name="burn_fee_wallet_address"]'
+    ID_NETWORK_TYPE = 'input[name="network"]'
+
+
+
+
+    def select_network(self, network_name: str):
+        # Кликаем по элементу с ролью combobox (их может быть много, берем первый для теста)
+        self.page.locator('div[role="combobox"]').first.click()
+        # Выбираем сеть
+        self.page.get_by_role("option", name=network_name, exact=False).click()
+        return self
 
 
     def edit_input_str(self, id: str, value: str):
         self.page.locator(id).fill(value)
+
 
 
     def edit_pool_fee_percent(self, value: int):
@@ -166,6 +177,12 @@ class ManageAssetPage:
 
     def check_asset_information_switcher(self):
         toggle = self.page.locator('input[name="about"]')
+        if not toggle.is_checked():
+            toggle.click()
+        return self
+
+    def check_asset_splitting_switcher(self):
+        toggle = self.page.locator('input[name="splitting"]')
         if not toggle.is_checked():
             toggle.click()
         return self

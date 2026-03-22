@@ -58,3 +58,16 @@ class EditAssetDataSRC20:
     burning_fee: int
     burning_fee_address: str
     network_fee: str
+
+
+@dataclass
+class AddAssetDataURC20:
+    network_type: str
+    asset_name: str
+    ticker_name: str
+    ex_rate: str
+    exrate_source_type: str
+    splitting_duration: int
+    daily_reward: int
+    start_block: int
+    network_fee: str

@@ -2,6 +2,7 @@ from data.models import EditAssetData
 from data.models import EditAssetDataBTC
 from data.models import EditAssetDataURC20
 from data.models import EditAssetDataSRC20
+from data.models import AddAssetDataURC20
 
 
 
@@ -97,3 +98,17 @@ SRC20 = EditAssetDataSRC20(  # type: ignore[call-arg]
     network_fee="2",
 )
 SRC20 = [SRC20]  # type: ignore[assignment]
+
+
+AddURC20 = AddAssetDataURC20(  # type: ignore[call-arg]
+    network_type="ultima Network",
+    asset_name="TURBO new",
+    ticker_name="TURBO",
+    ex_rate="USDT",
+    exrate_source_type="MARKET",
+    splitting_duration=700,
+    daily_reward=5,
+    start_block=1,
+    network_fee="1",
+)
+AddURC20 = [AddURC20]  # type: ignore[assignment]

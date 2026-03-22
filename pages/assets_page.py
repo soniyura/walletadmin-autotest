@@ -22,7 +22,8 @@ class AssetsPage:
 
 
     def open_add_new_asset(self):
-        self.page.get_by_role("button", name="Add Asset").click()
+        # self.page.get_by_role("button", name="Add Asset").click()
+        self.page.get_by_role("link", name="Add Asset").click()
 
 
 
