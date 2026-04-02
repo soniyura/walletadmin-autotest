@@ -1,4 +1,5 @@
 from playwright.sync_api import Page, expect
+import allure
 
 class ManageAssetPage:
     def __init__(self, page: Page):
@@ -32,10 +33,12 @@ class ManageAssetPage:
         self.page.get_by_text("Next", exact=True).click()
         return self
 
+    @allure.step("Кликаем на кнопку Save")
     def save_btn_click(self):
         self.page.get_by_text("Save", exact=True).click()
         return self
 
+    @allure.step("Кликаем на кнопку Confirm")
     def confirm_btn_click(self):
         self.page.get_by_text("Confirm", exact=True).click()
         return self
@@ -99,14 +102,17 @@ class ManageAssetPage:
         self.edit_input_str(self.ID_BURN_FEE_ADDRESS, value)
         return self
 
+    @allure.step("Вводит в поле high_priority значение : {value}")
     def edit_higt_prio_btc(self, value: int):
         self.edit_input_str(self.ID_HIGH_PRIO_BTC, str(value))
         return self
 
+    @allure.step("Вводит в поле medium_priority значение : {value}")
     def edit_medium_prio_btc(self, value: int):
         self.edit_input_str(self.ID_MEDIUM_PRIO_BTC, str(value))
         return self
 
+    @allure.step("Вводит в поле low_priority значение : {value}")
     def edit_low_prio_btc(self, value: int):
         self.edit_input_str(self.ID_LOW_PRIO_BTC, str(value))
         return self
@@ -224,6 +230,7 @@ class ManageAssetPage:
         # Поднимаемся на уровень вверх — там контейнер с checkbox + текст
         return self.page.get_by_text(network, exact=True).locator("..")
 
+    @allure.step("Включаю фильтр сети: {network}")
     def enable_network_filter(self, network: str): # метод для включения фильтра по сети
         filter_item = self._network_filter(network) # получение локатора фильтра по сети
 
@@ -237,6 +244,7 @@ class ManageAssetPage:
             expect(checkbox_input).to_be_checked() # проверка, что чекбокс отмечен
         # expect(self.network_card(network)).to_be_visible()
 
+    @allure.step("Проверяем что включена сеть: {network}")
     def assert_network_card_visible(self, network: str): # метод для проверки видимости карточки сети
         expect(self.network_card(network)).to_be_visible() # проверка видимости карточки сети
 
@@ -248,9 +256,7 @@ class ManageAssetPage:
             .locator("xpath=ancestor::div[contains(@class,'MuiBox-root')][1]") # поднимаемся к родительскому div с классом MuiBox-root
         )
 
-
-
-
+    @allure.step("Проверяем что введно верное значение : {value}")
     def assert_num_or_str_in_confirm_modal(self, value: int | str):
         modal = self.page.locator(self.ID_DIALOG)
         expect(modal).to_be_visible()

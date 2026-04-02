@@ -1,6 +1,7 @@
 import re
 from playwright.sync_api import Page, expect
 from pages.manage_asset import ManageAssetPage
+import allure
 
 class AssetsSectionView:
     def __init__(self, page: Page): # создание конструктора класса
@@ -117,7 +118,7 @@ class AssetsSectionView:
             # уже выключен — ок
             expect(checkbox).not_to_be_checked()
 
-
+    @allure.step("Находит блок токена по имени и кликает по тексту токена внутри этого блока: {token_name}")
     def open_token(self, token_name: str):
         """
         Находит блок токена по имени и кликает по тексту токена внутри этого блока.

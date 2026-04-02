@@ -3,9 +3,13 @@ from pages.assets_page_section_view import AssetsSectionView
 from pages.base_page import BasePage
 from pages.manage_asset import ManageAssetPage
 from data.edit_asset_data import BTC
+import allure
+
 
 
 @pytest.mark.parametrize("asset_data", BTC, ids=lambda x: x.asset_name)
+@allure.title("Verify ability to edit the asset BITCOIN NETWORK block")
+@allure.issue("https://testrail.dramaco.tech/index.php?/cases/view/209639", "C209639")
 def test_edit_asset(login, asset_data):
     """
     C209639

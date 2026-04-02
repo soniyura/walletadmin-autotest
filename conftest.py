@@ -1,7 +1,7 @@
 import os
 import pytest
+import allure
 from dotenv import load_dotenv
-
 from pages.login_page import LoginPage
 
 load_dotenv()
@@ -25,3 +25,21 @@ def creds():
 def login(page, base_url, creds):
     LoginPage(page).login(creds["username"], creds["password"], base_url)
     return page
+
+
+# добавление скриншотов ошибок в репорт
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+
+    if report.when == 'call' and report.failed:
+        if 'login' in item.funcargs:
+            # Берем объект page из твоей фикстуры login
+            page = item.funcargs['login']
+
+            allure.attach(
+                page.screenshot(full_page=True),
+                name="screenshot_on_failure",
+                attachment_type=allure.attachment_type.PNG
+            )
