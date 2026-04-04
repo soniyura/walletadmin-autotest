@@ -7,7 +7,7 @@ class BasePage:
     def __init__(self, page: Page):
         self.page = page
 
-    @allure.step("Проверяем что отобразился банер - You have unpublished changes... ")
+    @allure.step("Check that the banner is displayed - You have unpublished changes... ")
     def banner_unpublished_changes(self):
         expect(self.page.get_by_text(
             re.compile(r"You have unpublished changes in .* config file\.?")

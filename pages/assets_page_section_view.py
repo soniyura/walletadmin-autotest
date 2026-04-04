@@ -118,7 +118,7 @@ class AssetsSectionView:
             # уже выключен — ок
             expect(checkbox).not_to_be_checked()
 
-    @allure.step("Находит блок токена по имени и кликает по тексту токена внутри этого блока: {token_name}")
+    @allure.step("Finds the token block by name and clicks on it : {token_name}")
     def open_token(self, token_name: str):
         """
         Находит блок токена по имени и кликает по тексту токена внутри этого блока.

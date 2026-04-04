@@ -26,19 +26,21 @@ class ManageAssetPage:
         expect(checkbox).not_to_be_checked()
 
 
+    @allure.step("Click the Cance button")
     def cancel_btn_click(self):
         self.page.get_by_role("link", name="Cancel").click()
 
+    @allure.step("Click the Next button")
     def next_btn_click(self):
         self.page.get_by_text("Next", exact=True).click()
         return self
 
-    @allure.step("Кликаем на кнопку Save")
+    @allure.step("Click the Save button")
     def save_btn_click(self):
         self.page.get_by_text("Save", exact=True).click()
         return self
 
-    @allure.step("Кликаем на кнопку Confirm")
+    @allure.step("Click the Confirm button")
     def confirm_btn_click(self):
         self.page.get_by_text("Confirm", exact=True).click()
         return self
@@ -84,52 +86,58 @@ class ManageAssetPage:
     def edit_input_str(self, id: str, value: str):
         self.page.locator(id).fill(value)
 
-
-
+    @allure.step("Sets the value in the pool_fee_percent field: {value}")
     def edit_pool_fee_percent(self, value: int):
         self.edit_input_str(self.ID_POOL_FEE_PERCENT, str(value))
         return self
 
+    @allure.step("Sets the value in the pool_fee_address field: {value}")
     def edit_pool_fee_address(self, value: str):
         self.edit_input_str(self.ID_POOL_FEE_ADDRESS, value)
         return self
 
+    @allure.step("Sets the value in the burn_fee_percent field: {value}")
     def edit_burn_fee_percent(self, value: int):
         self.edit_input_str(self.ID_BURN_FEE_PERCENT, str(value))
         return self
 
+    @allure.step("Sets the value in the burn_fee_address field: {value}")
     def edit_burn_fee_address(self, value: str):
         self.edit_input_str(self.ID_BURN_FEE_ADDRESS, value)
         return self
 
-    @allure.step("Вводит в поле high_priority значение : {value}")
+    @allure.step("Sets the value in the high_priority field: {value}")
     def edit_higt_prio_btc(self, value: int):
         self.edit_input_str(self.ID_HIGH_PRIO_BTC, str(value))
         return self
 
-    @allure.step("Вводит в поле medium_priority значение : {value}")
+    @allure.step("Sets the value in the medium_priority field: {value}")
     def edit_medium_prio_btc(self, value: int):
         self.edit_input_str(self.ID_MEDIUM_PRIO_BTC, str(value))
         return self
 
-    @allure.step("Вводит в поле low_priority значение : {value}")
+    @allure.step("Sets the value in the low_priority field: {value}")
     def edit_low_prio_btc(self, value: int):
         self.edit_input_str(self.ID_LOW_PRIO_BTC, str(value))
         return self
 
 
+    @allure.step("Sets the value in the token_name field: {value}")
     def edit_token_name(self, value: str):
         self.edit_input_str(self.ID_TOKEN_NAME, value)
         return self
 
+    @allure.step("Sets the value in the ticker_name field: {value}")
     def edit_ticker_name(self, value: str):
         self.edit_input_str(self.ID_TICKER_NAME, value)
         return self
 
+    @allure.step("Sets the value in the ticker_name_urc20 field: {value}")
     def edit_ticker_name_urc20(self, value: str):
         self.edit_input_str(self.ID_TICKER_NAME_URC20, value)
         return self
 
+    @allure.step("Select ticker name: {ticker}")
     def select_ticker_name(self, ticker: str):
         input_locator = self.page.locator(self.ID_TICKER_NAME_URC20)
         input_locator.click()
@@ -139,34 +147,42 @@ class ManageAssetPage:
         dropdown_option.click()
         return self
 
+    @allure.step("Sets the value in the split_duration field: {value}")
     def edit_split_duration(self, value: str):
         self.edit_input_str(self.ID_SPLIT_DURATION, str(value))
         return self
 
+    @allure.step("Sets the value in the daily_reward field: {value}")
     def edit_daily_reward(self, value: str):
         self.edit_input_str(self.ID_DAILY_REWARD, str(value))
         return self
 
+    @allure.step("Sets the value in the start_block field: {value}")
     def edit_start_block(self, value: str):
         self.edit_input_str(self.ID_START_BLOCK, str(value))
         return self
 
+    @allure.step("Sets the value in the decimals field: {value}")
     def edit_input_int(self, value: int):
         self.edit_input_str(self.ID_DECIMALS, str(value))
         return self
 
+    @allure.step("Sets the value in the contract_address field: {value}")
     def edit_contract_address(self, value: str):
         self.edit_input_str(self.ID_CONTRACT_ADDRESS, value)
         return self
 
+    @allure.step("Sets the value in the url_link field: {value}")
     def edit_url_link(self, value: str):
         self.edit_input_str(self.ID_URL, value)
         return self
 
+    @allure.step("Sets the value in the ex_rate field: {value}")
     def edit_ex_rate(self, value: str):
         self.edit_input_str(self.ID_EXRATE, value)
         return self
 
+    @allure.step("Sets the value in the exrate_source_type field")
     def edit_exrate_source_type(self, value: str):
         dropdown = self.page.get_by_role("combobox").nth(1)
         dropdown.scroll_into_view_if_needed()
@@ -174,6 +190,7 @@ class ManageAssetPage:
         self.page.get_by_role("option", name=value).click()
         return self
 
+    @allure.step("Sets the value in the exrate_source_type field")
     def edit_exrate_source_type_market(self, value: str):
         dropdown = self.page.get_by_role("combobox").nth(2)
         dropdown.scroll_into_view_if_needed()
@@ -181,46 +198,55 @@ class ManageAssetPage:
         self.page.get_by_role("option", name=value).click()
         return self
 
+    @allure.step("Turn ON asset_information_switcher")
     def check_asset_information_switcher(self):
         toggle = self.page.locator('input[name="about"]')
         if not toggle.is_checked():
             toggle.click()
         return self
 
+    @allure.step("Turn ON asset_splitting_switcher")
     def check_asset_splitting_switcher(self):
         toggle = self.page.locator('input[name="splitting"]')
         if not toggle.is_checked():
             toggle.click()
         return self
 
+    @allure.step("Turn ON pool_fee_switcher")
     def check_pool_fee_switcher(self):
         toggle = self.page.locator('input[name="pool_fee"]')
         if not toggle.is_checked():
             toggle.click()
         return self
 
+    @allure.step("Turn ON burn_fee_switcher")
     def check_burn_fee_switcher(self):
         toggle = self.page.locator('input[name="burning_fee"]')
         if not toggle.is_checked():
             toggle.click()
         return self
 
+    @allure.step("Sets the value in the ai_website_url field: {value}")
     def edit_ai_website_url(self, value: str):
         self.edit_input_str(self.ID_AI_WEBSITE_URL, value)
         return self
 
+    @allure.step("Sets the value in the ai_pool_address field: {value}")
     def edit_ai_pool_address(self, value: str):
         self.edit_input_str(self.ID_AI_POOL_ADDRESS, value)
         return self
 
+    @allure.step("Sets the value in the ai_whitepaper_url field: {value}")
     def edit_ai_whitepaper_url(self, value: str):
         self.edit_input_str(self.ID_AI_WHITEPAPER_URL, value)
         return self
 
+    @allure.step("Sets the value in the network_fee field: {value}")
     def edit_network_fee(self, value: str):
         self.edit_input_str(self.ID_NETWORK_FEE, str(value))
         return self
 
+    @allure.step("Sets the value in the network_fee_new field: {value}")
     def edit_network_fee_new(self, value: str):
         self.edit_input_str(self.ID_NETWORK_FEE_NEW, str(value))
         return self
@@ -230,7 +256,7 @@ class ManageAssetPage:
         # Поднимаемся на уровень вверх — там контейнер с checkbox + текст
         return self.page.get_by_text(network, exact=True).locator("..")
 
-    @allure.step("Включаю фильтр сети: {network}")
+    @allure.step("Enabling the network filter: {network}")
     def enable_network_filter(self, network: str): # метод для включения фильтра по сети
         filter_item = self._network_filter(network) # получение локатора фильтра по сети
 
@@ -244,7 +270,7 @@ class ManageAssetPage:
             expect(checkbox_input).to_be_checked() # проверка, что чекбокс отмечен
         # expect(self.network_card(network)).to_be_visible()
 
-    @allure.step("Проверяем что включена сеть: {network}")
+    @allure.step("Check that the network is turned on: {network}")
     def assert_network_card_visible(self, network: str): # метод для проверки видимости карточки сети
         expect(self.network_card(network)).to_be_visible() # проверка видимости карточки сети
 
@@ -256,13 +282,14 @@ class ManageAssetPage:
             .locator("xpath=ancestor::div[contains(@class,'MuiBox-root')][1]") # поднимаемся к родительскому div с классом MuiBox-root
         )
 
-    @allure.step("Проверяем что введно верное значение : {value}")
+    @allure.step("Сheck that the value entered is correct : {value}")
     def assert_num_or_str_in_confirm_modal(self, value: int | str):
         modal = self.page.locator(self.ID_DIALOG)
         expect(modal).to_be_visible()
         expect(modal).to_contain_text(str(value))
         return self
 
+    @allure.step("Сheck that the link entered is correct : {expected_href}")
     def assert_link_in_confirm_modal(self, expected_href: str):
         modal = self.page.locator(self.ID_DIALOG)
         expect(modal).to_be_visible()
