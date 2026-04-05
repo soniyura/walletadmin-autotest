@@ -17,6 +17,7 @@ class BasePage:
         expect(publish_button).to_be_visible()
         expect(publish_button).to_be_enabled()
 
+    @allure.step("Go to the Application Info page")
     def navigate_to_application_info(self):
         self.page.get_by_test_id("application-info-link").click()
 

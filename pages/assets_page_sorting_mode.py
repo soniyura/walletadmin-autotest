@@ -1,5 +1,6 @@
 import re
 from playwright.sync_api import Page, expect
+import allure
 
 class AssetsSortingMode:
     def __init__(self, page: Page): # создание конструктора класса
@@ -28,6 +29,8 @@ class AssetsSortingMode:
         # fallback 2: самый первый td (как крайний вариант)
         return row.locator("td").first
 
+    # метод для перетаскивания строки вниз на определенное количество позиций
+    @allure.step("dragging a row down by a certain number of positions")
     def drag_row_down(self, source_text: str, positions: int = 1):
         assert positions > 0
 
@@ -79,40 +82,38 @@ class AssetsSortingMode:
         """Внутренний метод для поиска строки, чтобы не дублировать код"""
         return self.page.locator("tr").filter(has_text=ticker).first
 
+    @allure.step("Checks that the UP button (the first one) is locked")
     def assert_up_button_disabled(self, ticker: str):
         """Проверяет, что кнопка ВВЕРХ (первая) заблокирована"""
         row = self._get_row_by_ticker(ticker)
-
         # Уточняем поиск: ищем тег button внутри ячейки (td),
         # исключая th (ячейку-перетаскиватель)
         up_button = row.locator("td button").first
-
         expect(up_button).to_be_disabled()
 
+    @allure.step("Checks to see if the DOWN button (the second one) is active")
     def assert_down_button_enabled(self, ticker: str):
         """Проверяет, что кнопка ВНИЗ (вторая) активна"""
         row = self._get_row_by_ticker(ticker)
-
         # Ищем последнюю кнопку среди всех кнопок в ячейках td
         down_button = row.locator("td button").last
-
         expect(down_button).to_be_enabled()
 
+    @allure.step("Clicks the DOWN button")
     def click_down_button(self, ticker: str):
         """Кликает на кнопку ВНИЗ (вторую)"""
         row = self._get_row_by_ticker(ticker)
         down_button = row.locator("td button").last
-
         down_button.click()
 
-
-
+    @allure.step("finds the line with the ticker and scrolls to it")
     def _get_row_by_ticker(self, ticker: str):
         """Находит строку с тикером и скроллит к ней"""
         row = self.page.locator("tr").filter(has_text=ticker).first
         row.scroll_into_view_if_needed()  # Авто-скролл к элементу
         return row
 
+    @allure.step("Checks to see if the DOWN button (the last one in the row) is locked")
     def assert_down_button_disabled(self, ticker: str):
         """Проверяет, что кнопка ВНИЗ (последняя в строке) заблокирована"""
         row = self._get_row_by_ticker(ticker)
@@ -120,18 +121,21 @@ class AssetsSortingMode:
         down_button = row.locator("td button").last
         expect(down_button).to_be_disabled()
 
+    @allure.step("Checks whether the UP button is active")
     def assert_up_button_enabled(self, ticker: str):
         """Проверяет, что кнопка ВВЕРХ активна (используется после сдвига вниз)"""
         row = self._get_row_by_ticker(ticker)
         up_button = row.locator("td button").first
         expect(up_button).to_be_enabled()
 
+    @allure.step("Clicks the UP button")
     def click_up_button(self, ticker: str):
         """Кликает на кнопку ВВЕРХ"""
         row = self._get_row_by_ticker(ticker)
         up_button = row.locator("td button").first
         up_button.click()
 
+    @allure.step("Checks whether the row containing the ticker {ticker} is the first one in the table")
     def assert_row_is_at_top(self, ticker: str):
         """Проверяет, что строка с тикером является первой в таблице (индекс 0)"""
         first_row = self.page.locator("tbody tr").first

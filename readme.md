@@ -31,3 +31,7 @@ allure serve allure-results
 pytest --alluredir=allure-results --clean-alluredir
 
 с очисткой истории папки allure-results
+
+
+
+addopts = -q --headed

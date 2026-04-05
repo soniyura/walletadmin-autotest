@@ -2,7 +2,7 @@ from pages.app_info_page import OsBlock
 from pages.base_page import BasePage
 
 
-def test_update_android_version_info(login):
+def test_update_ios_version_info(login):
     """
     C209619
     Verify ability to edit iOS block

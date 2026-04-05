@@ -5,48 +5,6 @@ class ManageAssetPage:
     def __init__(self, page: Page):
         self.page = page
 
-    def assert_opened_manage_asset_page(self):
-        expect(self.page.get_by_text("Manage Asset", exact=True)).to_be_visible()
-
-    def assert_default_state_switch_off(self):
-        label = self.page.get_by_text("Default State", exact=True).first
-        expect(label).to_be_visible()
-
-        # ВАЖНО: прокрутить к элементу (на случай ленивой отрисовки)
-        label.scroll_into_view_if_needed()
-
-        # Ищем ближайший контейнер, в котором есть checkbox
-        # (этот XPath поднимется вверх до первого предка, содержащего input[type=checkbox])
-        row = label.locator("xpath=ancestor::*[.//input[@type='checkbox']][1]")
-
-        checkbox = row.locator("input[type='checkbox']").first
-        expect(checkbox).to_be_attached()   # в DOM
-        # visible может быть false, если input скрытый (у MUI так бывает)
-        # поэтому лучше проверять именно состояние:
-        expect(checkbox).not_to_be_checked()
-
-
-    @allure.step("Click the Cance button")
-    def cancel_btn_click(self):
-        self.page.get_by_role("link", name="Cancel").click()
-
-    @allure.step("Click the Next button")
-    def next_btn_click(self):
-        self.page.get_by_text("Next", exact=True).click()
-        return self
-
-    @allure.step("Click the Save button")
-    def save_btn_click(self):
-        self.page.get_by_text("Save", exact=True).click()
-        return self
-
-    @allure.step("Click the Confirm button")
-    def confirm_btn_click(self):
-        self.page.get_by_text("Confirm", exact=True).click()
-        return self
-
-
-
     ID_TOKEN_NAME = 'input[name="name"]'
     ID_TICKER_NAME = 'input[name="abbr"]'
     ID_TICKER_NAME_URC20 = 'input[placeholder="Asset Ticker (eg BTC)"]'
@@ -73,7 +31,43 @@ class ManageAssetPage:
     ID_NETWORK_TYPE = 'input[name="network"]'
 
 
+    @allure.step("Open Manage Assets")
+    def assert_opened_manage_asset_page(self):
+        expect(self.page.get_by_text("Manage Asset", exact=True)).to_be_visible()
 
+    @allure.step("Сhecks that the “Default State” switch is off")
+    def assert_default_state_switch_off(self):
+        label = self.page.get_by_text("Default State", exact=True).first
+        expect(label).to_be_visible()
+        label.scroll_into_view_if_needed()
+        # Ищем ближайший контейнер, в котором есть checkbox
+        # (этот XPath поднимется вверх до первого предка, содержащего input[type=checkbox])
+        row = label.locator("xpath=ancestor::*[.//input[@type='checkbox']][1]")
+        checkbox = row.locator("input[type='checkbox']").first
+        expect(checkbox).to_be_attached()   # в DOM
+        # visible может быть false, если input скрытый (у MUI так бывает)
+        # поэтому лучше проверять именно состояние:
+        expect(checkbox).not_to_be_checked()
+
+
+    @allure.step("Click the Cance button")
+    def cancel_btn_click(self):
+        self.page.get_by_role("link", name="Cancel").click()
+
+    @allure.step("Click the Next button")
+    def next_btn_click(self):
+        self.page.get_by_text("Next", exact=True).click()
+        return self
+
+    @allure.step("Click the Save button")
+    def save_btn_click(self):
+        self.page.get_by_text("Save", exact=True).click()
+        return self
+
+    @allure.step("Click the Confirm button")
+    def confirm_btn_click(self):
+        self.page.get_by_text("Confirm", exact=True).click()
+        return self
 
     def select_network(self, network_name: str):
         # Кликаем по элементу с ролью combobox (их может быть много, берем первый для теста)
@@ -81,7 +75,6 @@ class ManageAssetPage:
         # Выбираем сеть
         self.page.get_by_role("option", name=network_name, exact=False).click()
         return self
-
 
     def edit_input_str(self, id: str, value: str):
         self.page.locator(id).fill(value)
@@ -120,7 +113,6 @@ class ManageAssetPage:
     def edit_low_prio_btc(self, value: int):
         self.edit_input_str(self.ID_LOW_PRIO_BTC, str(value))
         return self
-
 
     @allure.step("Sets the value in the token_name field: {value}")
     def edit_token_name(self, value: str):
