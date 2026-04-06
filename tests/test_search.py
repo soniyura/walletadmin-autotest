@@ -1,6 +1,11 @@
 from pages.assets_page_section_view import AssetsSectionView
+import allure
 
 
+
+@allure.title("Verify ability to search by token name and token ticker")
+@allure.testcase("https://testrail.dramaco.tech/index.php?/cases/view/209625",
+                 "C209625: Verify ability to search by token name and token ticker")
 def test_assets_page_search(login):
     """
     C209625

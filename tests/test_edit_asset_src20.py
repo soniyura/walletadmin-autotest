@@ -3,9 +3,12 @@ from pages.assets_page_section_view import AssetsSectionView
 from pages.base_page import BasePage
 from pages.manage_asset import ManageAssetPage
 from data.edit_asset_data import SRC20
-
+import allure
 
 @pytest.mark.parametrize("asset_data", SRC20, ids=lambda x: x.asset_name)
+@allure.title("Verify ability to edit the token SMART NETWORK block")
+@allure.testcase("https://testrail.dramaco.tech/index.php?/cases/view/209629",
+                 "C209629: Verify ability to edit the token SMART NETWORK block")
 def test_edit_asset(login, asset_data):
     """
     C209629

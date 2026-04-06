@@ -1,7 +1,11 @@
 from pages.app_info_page import OsBlock
 from pages.base_page import BasePage
+import allure
 
 
+@allure.title("Verify ability to edit iOS block")
+@allure.issue("https://testrail.dramaco.tech/index.php?/cases/view/209619",
+              "Verify ability to edit iOS block C209619")
 def test_update_ios_version_info(login):
     """
     C209619

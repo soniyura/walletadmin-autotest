@@ -1,6 +1,12 @@
 from pages.app_info_page import OsBlock
 from pages.base_page import BasePage
+import allure
 
+
+
+@allure.title("Verify ability to edit Android block")
+@allure.testcase("https://testrail.dramaco.tech/index.php?/cases/view/209618",
+                 "C209618: Verify ability to edit Android block")
 def test_update_android_version_info(login):
     """
     C209618

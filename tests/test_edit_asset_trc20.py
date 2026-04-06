@@ -3,9 +3,14 @@ from pages.assets_page_section_view import AssetsSectionView
 from pages.base_page import BasePage
 from pages.manage_asset import ManageAssetPage
 from data.edit_asset_data import TRON
+import allure
+
 
 
 @pytest.mark.parametrize("asset_data", TRON, ids=lambda x: x.asset_name)  # type: ignore[arg-type]
+@allure.title("Verify ability to edit the asset TRON NETWORK block")
+@allure.testcase("https://testrail.dramaco.tech/index.php?/cases/view/209631",
+                 "C209631: Verify ability to edit the asset TRON NETWORK block")
 def test_edit_asset(login, asset_data):
     """
     C209631

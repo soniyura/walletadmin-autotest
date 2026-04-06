@@ -9,7 +9,8 @@ import allure
 
 @pytest.mark.parametrize("asset_data", BTC, ids=lambda x: x.asset_name)
 @allure.title("Verify ability to edit the asset BITCOIN NETWORK block")
-@allure.issue("https://testrail.dramaco.tech/index.php?/cases/view/209639", "C209639")
+@allure.testcase("https://testrail.dramaco.tech/index.php?/cases/view/209639",
+                 "C209639: Verify ability to edit the asset BITCOIN NETWORK block")
 def test_edit_asset(login, asset_data):
     """
     C209639

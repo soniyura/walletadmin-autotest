@@ -1,8 +1,12 @@
 from pages.assets_page_sorting_mode import AssetsSortingMode
 from pages.assets_page import AssetsPage
 from pages.base_page import BasePage
+import allure
 
 
+@allure.title("Verify ability to change the order of assets")
+@allure.testcase("https://testrail.dramaco.tech/index.php?/cases/view/209626",
+                 "C209626: Verify ability to change the order of assets")
 def test_drag_and_drop_asset(login):
     """
     C209626

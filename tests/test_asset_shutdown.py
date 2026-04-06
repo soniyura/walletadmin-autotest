@@ -3,7 +3,13 @@ from pages.assets_page_section_view import AssetsSectionView
 from pages.manage_asset import ManageAssetPage
 from pages.assets_page import AssetsPage
 from pages.assets_page_table_view import AssetsTableView
+import allure
 
+
+
+@allure.title("Аsset shutdown")
+@allure.testcase("https://testrail.dramaco.tech/index.php?/cases/view/209623",
+                 "C209623: Аsset shutdown")
 def test_asset_shutdown(login):
     """
     C209623

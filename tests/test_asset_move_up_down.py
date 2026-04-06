@@ -1,7 +1,12 @@
 from pages.assets_page_sorting_mode import AssetsSortingMode
 from pages.assets_page import AssetsPage
 from pages.base_page import BasePage
+import allure
 
+
+@allure.title("Verify ability to move the asset up/down")
+@allure.testcase("https://testrail.dramaco.tech/index.php?/cases/view/209627",
+              "C209619 :Verify ability to move the asset up/down")
 def test_move_asset_up_down(login):
     """
     C209627

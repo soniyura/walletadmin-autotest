@@ -1,5 +1,11 @@
 from pages.assets_page_section_view import AssetsSectionView
+import allure
 
+
+
+@allure.title("Verify block disabling from the Assets page")
+@allure.testcase("https://testrail.dramaco.tech/index.php?/cases/view/209622",
+                 "C209622: Verify block disabling from the Assets page")
 def test_disable_all_filters_in_one_run(login):
     """
     C209622

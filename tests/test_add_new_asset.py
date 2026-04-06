@@ -4,9 +4,19 @@ from pages.base_page import BasePage
 from pages.manage_asset import ManageAssetPage
 from pages.assets_page import AssetsPage
 from data.edit_asset_data import AddURC20
+import allure
+
 
 @pytest.mark.parametrize("asset_data", AddURC20, ids=lambda x: x.asset_name)
+@allure.title("Verify ability to add a new asset")
+@allure.testcase("https://testrail.dramaco.tech/index.php?/cases/view/209628",
+                 "C209628: Verify ability to add a new asset")
 def test_add_new_asset(login, asset_data):
+    """
+    C209628
+    Verify ability to add a new asset
+    https://testrail.dramaco.tech/index.php?/cases/view/209628
+    """
 
     page = login
     base_page = BasePage(page)
