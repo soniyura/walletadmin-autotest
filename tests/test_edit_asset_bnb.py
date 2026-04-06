@@ -10,6 +10,7 @@ import allure
 @pytest.mark.parametrize("asset_data", BINANCE_USD, ids=lambda x: x.asset_name)
 @allure.title("Verify ability to edit the asset BNB NETWORK block")
 def test_edit_asset(login, asset_data):
+    allure.dynamic.parameter("asset_data", asset_data.asset_name)
     """
     psss
     """

@@ -10,6 +10,7 @@ import allure
 @allure.testcase("https://testrail.dramaco.tech/index.php?/cases/view/209629",
                  "C209629: Verify ability to edit the token SMART NETWORK block")
 def test_edit_asset(login, asset_data):
+    allure.dynamic.parameter("asset_data", asset_data.asset_name)
     """
     C209629
     Verify ability to edit the token SMART NETWORK block

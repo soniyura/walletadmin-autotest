@@ -11,6 +11,7 @@ import allure
 @allure.testcase("https://testrail.dramaco.tech/index.php?/cases/view/209637",
                  "C209637: Verify ability to edit the token ULTIMA NETWORK block")
 def test_edit_asset(login, asset_data):
+    allure.dynamic.parameter("asset_data", asset_data.asset_name)
     """
     C209637
     Verify ability to edit the token ULTIMA NETWORK block

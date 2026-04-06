@@ -12,6 +12,7 @@ import allure
 @allure.testcase("https://testrail.dramaco.tech/index.php?/cases/view/209631",
                  "C209631: Verify ability to edit the asset TRON NETWORK block")
 def test_edit_asset(login, asset_data):
+    allure.dynamic.parameter("asset_data", asset_data.asset_name)
     """
     C209631
     Verify ability to edit the asset TRON NETWORK block

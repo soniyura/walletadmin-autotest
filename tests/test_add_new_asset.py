@@ -12,6 +12,7 @@ import allure
 @allure.testcase("https://testrail.dramaco.tech/index.php?/cases/view/209628",
                  "C209628: Verify ability to add a new asset")
 def test_add_new_asset(login, asset_data):
+    allure.dynamic.parameter("asset_data", asset_data.asset_name)
     """
     C209628
     Verify ability to add a new asset
