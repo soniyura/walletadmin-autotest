@@ -43,3 +43,12 @@ def pytest_runtest_makereport(item, call):
                 name="screenshot_on_failure",
                 attachment_type=allure.attachment_type.PNG
             )
+
+# Вставьте это в conftest.py
+@pytest.fixture(autouse=True)
+def set_allure_title(request):
+    # Берем текущее имя теста (если нет декоратора title)
+    item = request.node
+    # Если у теста есть кастомный заголовок, Allure его применит,
+    # а этот хук поможет не добавлять лишнее.
+    pass

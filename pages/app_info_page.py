@@ -1,4 +1,5 @@
 from playwright.sync_api import Page, expect
+import allure
 
 class OsBlock:
     def __init__(self, page: Page):
@@ -9,6 +10,8 @@ class OsBlock:
     Verify ability to edit Android block
     https://testrail.dramaco.tech/index.php?/cases/view/209618
     """
+
+    @allure.step("Update the Android block. {current_version_code}, {current_version_name}, {min_version_code}, {min_version_name}")
     def update_android_version_info(self, current_version_code: str, current_version_name: str,
                             min_version_code: str, min_version_name: str): # обновление информации о версии Android
         self.page.locator("form").filter(has_text="AndroidApplication").get_by_role("button").click() # открытие формы редактирования
@@ -33,6 +36,8 @@ class OsBlock:
     Verify ability to edit iOS block
     https://testrail.dramaco.tech/index.php?/cases/view/209619
     """
+
+    @allure.step("Update the iOS block. {current_version_name}, {min_version_name}")
     def update_ios_version_info(self, current_version_name: str, min_version_name: str): # обновление информации о версии iOS
         self.page.locator("form").filter(has_text="IosApplication").get_by_role("button").click() # открытие формы редактирования
 

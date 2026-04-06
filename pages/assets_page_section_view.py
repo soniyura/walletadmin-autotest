@@ -8,10 +8,12 @@ class AssetsSectionView:
         self.page = page # инициализация страницы
 
     # login test
+    @allure.step("Check if the Assets page opens")
     def assert_opened(self): # проверка открытия страницы
         expect(self.page).to_have_url(re.compile(r".*/assets/?(\?.*)?$")) # проверка URL
         expect(self.page.get_by_text("Assets", exact=True)).to_be_visible() # проверка видимости текста "Assets"
 
+    @allure.step("Check the filters for the displayed networks ")
     def assert_network_filters_visible(self): # проверка видимости фильтров сетей
         filters = self.page.locator("form") # локатор для формы фильтров
 
@@ -20,6 +22,7 @@ class AssetsSectionView:
             loc = filters.get_by_text(n, exact=True) # локатор для каждой сети
             expect(loc.first).to_be_visible() # проверка видимости локатора
 
+    @allure.step("check that the page isn't empty")
     def assert_not_empty(self): # проверка, что страница не пуста
         switches = self.page.locator('[role="switch"], input[type="checkbox"]') # локатор для переключателей
         expect(switches.first).to_be_visible() # проверка видимости первого переключателя
@@ -34,6 +37,7 @@ class AssetsSectionView:
         # Поднимаемся на уровень вверх — там контейнер с checkbox + текст
         return self.page.get_by_text(network, exact=True).locator("..") # локатор для контейнера с чекбоксом и текстом
 
+    @allure.step("disable the network filter : {network}")
     def disable_network_filter(self, network: str): # метод для отключения фильтра по сети
         filter_item = self._network_filter(network) # получение локатора фильтра по сети
 
@@ -46,6 +50,7 @@ class AssetsSectionView:
             checkbox_ui.click()  # <-- ВАЖНО: кликаем по MuiCheckbox-root элементу, а не по самому input
             expect(checkbox_input).not_to_be_checked() # проверка, что чекбокс не отмечен
 
+    @allure.step("Enable the network filter : {network}")
     def enable_network_filter(self, network: str): # метод для включения фильтра по сети
         filter_item = self._network_filter(network) # получение локатора фильтра по сети
 
@@ -68,14 +73,17 @@ class AssetsSectionView:
             .locator("xpath=ancestor::div[contains(@class,'MuiBox-root')][1]") # поднимаемся к родительскому div с классом MuiBox-root
         )
 
+    @allure.step("check Network card visibility: {network}")
     def assert_network_card_visible(self, network: str): # метод для проверки видимости карточки сети
         expect(self.network_card(network)).to_be_visible() # проверка видимости карточки сети
 
+    @allure.step("check Network card hidden : {network}")
     def assert_network_card_hidden(self, network: str): # метод для проверки скрытости карточки сети
         expect(self.network_card(network)).to_be_hidden() #
 
     # ---------- PLACEHOLDER ----------
 
+    @allure.step("Check what's displayed: Unassigned Space")
     def assert_unassigned_visible(self): # метод для проверки видимости плейсхолдера "Unassigned Space"
         expect(
             self.page.get_by_text("Unassigned Space", exact=True).first     # локатор по тексту "Unassigned Space"
@@ -102,14 +110,13 @@ class AssetsSectionView:
         return row
 
 
+
+    @allure.step("Disable the token: {token_name}")
     def disable_token(self, token_name: str):
         row = self._token_row_by_name(token_name)
-
         checkbox = row.locator("input[type='checkbox']").first
         switch_ui = row.locator("span.MuiSwitch-root").first
-
         expect(checkbox).to_be_visible()
-
         # если включен — выключаем
         if checkbox.is_checked():
             switch_ui.click()
@@ -118,13 +125,13 @@ class AssetsSectionView:
             # уже выключен — ок
             expect(checkbox).not_to_be_checked()
 
+
     @allure.step("Finds the token block by name and clicks on it : {token_name}")
     def open_token(self, token_name: str):
         """
         Находит блок токена по имени и кликает по тексту токена внутри этого блока.
         """
         row = self._token_row_by_name(token_name)
-
         # клик именно по тексту внутри найденного блока (самый стабильный вариант)
         token_link = row.get_by_text(token_name, exact=True).first
         expect(token_link).to_be_visible()
@@ -136,11 +143,14 @@ class AssetsSectionView:
     Verify ability to search by token name and token ticker
     https://testrail.dramaco.tech/index.php?/cases/view/209625    
     """
+    @allure.step("Type the text into the search field: {text} ")
     def insert_asset_name(self, text: str):
         search_input = self.page.locator("input#search")
         search_input.clear()
         search_input.fill(text)
 
+    # метод для     проверки видимости и доступности кнопки поиска
+    @allure.step("Checking the button display: {button_name} ")
     def expect_search_button_visible(self, button_name: str):
         expect(
             self.page.get_by_role("button", name=button_name)
@@ -149,6 +159,7 @@ class AssetsSectionView:
             self.page.get_by_role("button", name=button_name)
         ).to_be_enabled()
 
+    @allure.step("Click the button : {button_name} ")
     def click_button(self, button_name: str):
         button = self.page.get_by_role("button", name=button_name, exact=True)
         expect(button).to_be_visible()
@@ -164,6 +175,8 @@ class AssetsSectionView:
     field_type="ticker", то проверяем, что keyword(передаваемое слово например USDT ищется по тикеру) 
     есть в тикере каждого актива.
     """
+
+    @allure.step("Verify that all displayed assets contain the keyword in their name or ticker")
     def assert_all_assets_contain_keyword(
             self,
             keyword: str,
