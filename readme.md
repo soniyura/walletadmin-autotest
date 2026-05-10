@@ -1,4 +1,4 @@
-# AutoTestAdminCODEX
+# AutoTestAdmin
 
 Pytest + Playwright autotests for the admin panel.
 
