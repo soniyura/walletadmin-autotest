@@ -51,6 +51,7 @@ ui_tests:
     - ls -la /ci-reports
     - echo "=== /ci-reports/latest ==="
     - ls -la /ci-reports/latest
+    - exit ${TEST_EXIT_CODE:-0}
 
   after_script:
     - echo "=================================================="
