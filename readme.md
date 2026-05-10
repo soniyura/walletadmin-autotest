@@ -1,37 +1,51 @@
-pip install pytest
+# AutoTestAdminCODEX
 
-pip install playwright
+Pytest + Playwright autotests for the admin panel.
 
+## Setup
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
 python -m playwright install
+```
 
-playwright install
+Create `.env` from `.env.example` and fill local credentials:
 
-python -m playwright codegen url
+```env
+BASE_URL=https://example.com
+ADMIN_USER=your_username
+ADMIN_PASS=your_password
+```
 
-===================allure==============
+Never commit `.env` or real credentials.
 
-local
+## Run tests
 
-brew install allure
-allure --version
+Headless mode is the default:
 
-==================
+```bash
+pytest
+```
 
-in venv
+For local debugging with a visible browser:
 
-pip install allure-pytest
+```bash
+pytest --headed
+```
 
-=======================
+## Allure report
 
-pytest --alluredir=allure-results
-
-allure serve allure-results
-
-
+```bash
 pytest --alluredir=allure-results --clean-alluredir
+allure serve allure-results
+```
 
-с очисткой истории папки allure-results
+Install the Allure command-line tool separately if `allure` is not available in your shell.
 
+## Useful Playwright command
 
-
-addopts = -q --headed
+```bash
+python -m playwright codegen <url>
+```
