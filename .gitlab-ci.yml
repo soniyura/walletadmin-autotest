@@ -1,0 +1,59 @@
+stages:
+  - test
+
+ui_tests:
+  stage: test
+  tags:
+    - docker
+  image: python:3.11
+
+  variables:
+    GIT_STRATEGY: none
+
+  before_script:
+    - apt-get update
+    - apt-get install -y git curl unzip default-jre
+
+    - pip install --upgrade pip
+    - pip install pytest playwright allure-pytest
+
+    - curl -L -o /tmp/allure.tgz https://github.com/allure-framework/allure2/releases/download/2.34.1/allure-2.34.1.tgz
+    - tar -xzf /tmp/allure.tgz -C /opt
+    - ln -s /opt/allure-2.34.1/bin/allure /usr/local/bin/allure
+
+  script:
+    # clone github repo
+    - git clone https://github.com/soniyura/walletadmin-autotest.git github-src
+
+    - cd github-src
+
+    # configure git
+    - git config --global user.email "ci@example.com"
+    - git config --global user.name "gitlab-ci"
+
+    # add gitlab remote
+    - git remote add gitlab http://oauth2:${GITLAB_TOKEN}@gitlab.local/root/walletadmin-autotest.git
+
+    # push github content into gitlab
+    - git push gitlab master:master --force -o ci.skip
+
+    # install dependencies
+    - pip install -r requirements.txt
+
+    # install playwright
+    - python -m playwright install --with-deps chromium
+    - pytest --alluredir=allure-results || TEST_EXIT_CODE=$?
+    - allure generate allure-results -o allure-report --clean
+    - mkdir -p /ci-reports/latest
+    - rm -rf /ci-reports/latest/*
+    - cp -r allure-report/* /ci-reports/latest/
+    - echo "=== /ci-reports ==="
+    - ls -la /ci-reports
+    - echo "=== /ci-reports/latest ==="
+    - ls -la /ci-reports/latest
+
+  after_script:
+    - echo "=================================================="
+    - echo "Allure report is available at:"
+    - echo "http://localhost:9000"
+    - echo "=================================================="
