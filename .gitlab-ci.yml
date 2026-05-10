@@ -54,6 +54,7 @@ ui_tests:
 
   after_script:
     - echo "=================================================="
-    - echo "Allure report is available at:"
+    - echo "Allure report is available:"
+    - echo "Open this link in your browser"
     - echo "http://localhost:9000"
     - echo "=================================================="
